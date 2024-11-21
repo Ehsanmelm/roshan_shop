@@ -92,8 +92,8 @@ class ShopCartView(APIView):
     
 class ClearShopCartView(APIView):
     Add2ShopCartView
-    def delete(self,request):        # product = ProductsModel.objects.get(id = pk)
+    def delete(self,request):        
 
-        ShopCartModel.objects.all().delete()
+        ShopCartModel.objects.filter(user=request.user).delete()
 
         return Response("Clear Success" , status= status.HTTP_204_NO_CONTENT)
