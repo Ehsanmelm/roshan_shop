@@ -17,6 +17,8 @@ class ProductsModel(models.Model):
     description = models.TextField()
     capacity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=10 , decimal_places=2)
+    
+    visit_number = models.PositiveIntegerField() 
 
     def __str__(self):
         return f'{self.name}'

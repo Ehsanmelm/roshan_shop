@@ -3,12 +3,10 @@ services:
     image: mysql:8
 
     environment:
-      MYSQL_DATABASE: "roshan_shop_db"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "@Mohammad1382"
+      # MYSQL_USER: "root"
       MYSQL_ROOT_PASSWORD: "@Mohammad1382"
-    ports:
-      - "3306:3306"
+      MYSQL_DATABASE: "roshan_shop_db"
+      # MYSQL_PASSWORD: "@Mohammad1382"
 
     volumes:
       - db_data:/var/lib/mysql
@@ -19,7 +17,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver"
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
 
 volumes:
   db_data:
