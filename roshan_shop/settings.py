@@ -93,6 +93,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '@Mohammad1382',
         'HOST': 'localhost',  
+        # 'HOST': 'db',  
         'PORT': '3306',       
     }
 }
@@ -147,3 +148,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'core.User'    
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_BEAT_SCHEDULE = {
+    'my_task': {
+        'task': 'shop.tasks.list_highest_visit_product_task',
+        'schedule': 10,
+        # 'args': [' <<<<<passed >>>>>']
+    }
+}
