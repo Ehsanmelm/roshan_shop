@@ -50,6 +50,7 @@ class CategoryView(ModelViewSet):
     
 
 class Add2ShopCartView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self,request , pk):
         user = request.user
@@ -65,6 +66,7 @@ class Add2ShopCartView(APIView):
     
 
 class RemoveFromShopCartView(APIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ShopCartSerializer
 
     def delete(self,request , pk):
@@ -83,6 +85,7 @@ class RemoveFromShopCartView(APIView):
         
 
 class ShopCartView(APIView):
+    permission_classes = [IsAuthenticated]
     
     def get(self,request):
         queryset = ShopCartModel.objects.filter(user=request.user)
@@ -91,7 +94,8 @@ class ShopCartView(APIView):
         return Response(serializer.data)    
     
 class ClearShopCartView(APIView):
-    Add2ShopCartView
+    permission_classes = [IsAuthenticated]
+
     def delete(self,request):        
 
         ShopCartModel.objects.filter(user=request.user).delete()
