@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'django.contrib.admin',#
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -92,8 +92,8 @@ DATABASES = {
         'NAME': 'roshan_shop_db',
         'USER': 'root',
         'PASSWORD': '@Mohammad1382',
-        'HOST': 'localhost',  
-        # 'HOST': 'db',  
+        # 'HOST': 'localhost',  
+        'HOST': 'database',  
         'PORT': '3306',       
     }
 }
@@ -150,8 +150,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'    
 
 
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+# CELERY_BROKER_URL = 'redis://localhost:6379/1'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
+
 CELERY_BEAT_SCHEDULE = {
     'my_task': {
         'task': 'shop.tasks.list_highest_visit_product_task',
