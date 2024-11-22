@@ -11,19 +11,29 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import environ , os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+env = environ.Env(
+    DEBUG = (bool, True),
+    SECRET_KEY = (str, 'django-insecure-@c%nm9$-58p!27=ei7%8@+mtxmeg58^4qpl=#qk(htjbute@9i'  ),
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR , '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@c%nm9$-58p!27=ei7%8@+mtxmeg58^4qpl=#qk(htjbute@9i'
+
+# SECRET_KEY = 'django-insecure-@c%nm9$-58p!27=ei7%8@+mtxmeg58^4qpl=#qk(htjbute@9i'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+# DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -90,11 +100,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'roshan_shop_db',
-        'USER': 'root',
-        'PASSWORD': '@Mohammad1382',
-        # 'HOST': 'localhost',  
+        'USER': env('db_user'),
+        'PASSWORD': env('db_password'),
         'HOST': 'database',  
         'PORT': '3306',       
+        # 'USER': 'root',
+        # 'PASSWORD': '@Mohammad1382',
+        # 'HOST': 'localhost',  
     }
 }
 
