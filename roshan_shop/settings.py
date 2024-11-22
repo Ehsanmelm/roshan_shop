@@ -160,6 +160,5 @@ CELERY_BEAT_SCHEDULE = {
     'my_task': {
         'task': 'shop.tasks.list_highest_visit_product_task',
         'schedule': 10,
-        # 'args': [' <<<<<passed >>>>>']
     }
 }

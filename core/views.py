@@ -50,17 +50,6 @@ class UserLoginView(APIView):
             raise ValidationError("User Not Found ", status.HTTP_400_BAD_REQUEST)
         
 
-    # def get(self,request):
-        # if User.objects.filter(username=request.user.username ).exists():
-        #     queryset = User.objects.get(username=request.user.username )
-        #     serialzier= UserRegisterSerializer(queryset)
-        #     print(queryset)
-        #     print('-----------')
-        #     return Response(serialzier.data)
-        
-        # else:
-        #     return Response()
-
 class UserLogoutView(APIView):
     permission_classes = [IsAuthenticated]
 

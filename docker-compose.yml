@@ -5,10 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "@Mohammad1382"
       MYSQL_DATABASE: "roshan_shop_db"
-      # MYSQL_USER: "root"
       MYSQL_PASSWORD: "@Mohammad1382"
-    # ports:
-    # - "3306:3306"
 
     volumes:
       - db_data:/var/lib/mysql
@@ -20,7 +17,9 @@ services:
       - "8000:8000"
     depends_on:
       - database
-    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python3 manage.py makemigrations &&
+      python3 manage.py migrate &&
+      python3 manage.py runserver 0.0.0.0:8000"
 
   redis:
     image: redis:latest
@@ -32,7 +31,6 @@ services:
     depends_on:
       - database
       - backend
-      # - redis
     volumes:
       - .:/app
     command: celery -A roshan_shop worker -l info
@@ -42,7 +40,6 @@ services:
     depends_on:
       - celery
       - backend
-      # - redis
     command: celery -A roshan_shop beat -l info
 
 volumes:
