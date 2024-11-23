@@ -7,6 +7,7 @@ services:
       MYSQL_DATABASE: "roshan_shop_db"
       MYSQL_PASSWORD: "@Mohammad1382"
 
+    # command: mysql -u root -p @Mohammad1382 -e "CREATE DATABASE roshan_shop_db3"
     volumes:
       - db_data:/var/lib/mysql
 
