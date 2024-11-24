@@ -1,12 +1,22 @@
-from rest_framework import serializers
+from rest_framework import serializers , status
+from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 from .models import CategoryModel , ProductsModel , ShopCartModel
 from core.serializers import UserRegisterSerializer
+
 class CategorySerializer(ModelSerializer):
 
     class Meta:
         model = CategoryModel
         fields = ['name']
+
+    def create(self, validated_data):
+        if CategoryModel.objects.filter(name=validated_data['name']).exists():
+            raise ValidationError('Thre is a such a category!!' , status.HTTP_400_BAD_REQUEST   )
+    
+        else:
+            print(f"<<<<<<<<<<<<<<<<< {validated_data} >>>>>>>>")
+            return CategoryModel.objects.create(**validated_data)
 
 
 

@@ -58,6 +58,8 @@ class Add2ShopCartView(APIView):
 
         if product.capacity >0 and ShopCartModel.objects.filter(user=user , product=product).exists() is False:
             ShopCartModel.objects.create(user=user , product=product)
+            product.capacity -=1
+            product.save()
         
         else:
             raise ValidationError('You cant add this to your cart' , status.HTTP_400_BAD_REQUEST)

@@ -101,7 +101,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'roshan_shop_db',
-        'USER': env('db_user'),
+        'USER': env('db_user'),#
         'PASSWORD': env('db_password'),
         'HOST': 'database',  
         'PORT': '3306',       
