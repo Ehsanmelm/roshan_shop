@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 from rest_framework import status 
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -18,6 +19,8 @@ class UserRegisterView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.save()
+        user.set_password(user.password)
+        user.save()
         token , created = Token.objects.get_or_create(user=user)
 
         context= {
@@ -35,19 +38,34 @@ class UserLoginView(APIView):
         serializer = UserLoginSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
 
-        try:
-            user = User.objects.get(username = request.data['username'] , password = request.data['password'] )
-            token , created = Token.objects.get_or_create(user = user)
+        username = request.data['username']
+        password = request.data['password'] 
+        user= authenticate(username=username , password=password)
 
-            context = {
-                'username' : user.username,
-                'email' : user.email,
-                'Token' : token.key
-            }
-            return Response(context , status= status.HTTP_200_OK)
+        if not user:
+            raise ValidationError("Invalid credentials", status.HTTP_401_UNAUTHORIZED)
+        
+        token , created = Token.objects.get_or_create(user = user)
+        context = {
+            'username' : user.username,
+            'email' : user.email,
+            'Token' : token.key
+        }
+        return Response(context , status= status.HTTP_200_OK)
+
+        # try:
+            # user = User.objects.get(username = request.data['username'] , password = request.data['password'] )
+            # token , created = Token.objects.get_or_create(user = user)
+
+            # context = {
+            #     'username' : user.username,
+            #     'email' : user.email,
+            #     'Token' : token.key
+            # }
+            # return Response(context , status= status.HTTP_200_OK)
             
-        except:
-            raise ValidationError("User Not Found ", status.HTTP_400_BAD_REQUEST)
+        # except:
+            # raise ValidationError("User Not Found ", status.HTTP_400_BAD_REQUEST)
         
 
 class UserLogoutView(APIView):

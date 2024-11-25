@@ -27,7 +27,7 @@ class CategoryView(ModelViewSet):
     serializer_class = CategorySerializer
 
 
-    @action(detail=True , methods=['GET' , 'POST'] , permission_classes= [IsAuthenticated] , serializer_class=ProductsSerializer)
+    @action(detail=True , methods=['GET' , 'POST'] , permission_classes= [IsAuthenticated , IsAdminOrReadOnly] , serializer_class=ProductsSerializer)
     def products(self,request , pk):
 
         if request.method == "GET":
